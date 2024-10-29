@@ -6,8 +6,9 @@ import * as util from "./package-name-util";
 import tryResolve from "try-resolve";
 
 const SPECIAL_PACKAGE_NAME = [
+    "fontsettings", // → @honkit/honkit-plugin-fontsettings
     "highlight", // → @honkit/honkit-plugin-highlight
-    "theme-default", // → @honkit/honkit-plugin-theme-default
+    "theme-default" // → @honkit/honkit-plugin-theme-default
 ];
 
 /**

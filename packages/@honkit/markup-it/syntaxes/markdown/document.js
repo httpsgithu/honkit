@@ -13,6 +13,7 @@ function cleanupText(src) {
         .replace(/\t/g, "    ")
         .replace(/\u00a0/g, " ")
         .replace(/\u2424/g, "\n")
+        .replace(/ +\n/g, "<br>")
         .replace(/^ +$/gm, "");
 }
 
@@ -64,7 +65,7 @@ const documentRule = MarkupIt.Rule(MarkupIt.BLOCKS.DOCUMENT)
         text = cleanupText(text);
 
         const token = MarkupIt.Token.create(MarkupIt.BLOCKS.DOCUMENT, {
-            tokens: state.parseAsBlock(text),
+            tokens: state.parseAsBlock(text)
         });
 
         return MarkupIt.transform(token, resolveLink.bind(null, state));

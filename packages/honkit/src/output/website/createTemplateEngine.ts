@@ -37,7 +37,6 @@ function templateFolder(dir) {
 function createTemplateEngine(output: Output, currentFile: string): TemplateEngine {
     const book = output.getBook();
     const state = output.getState();
-    // @ts-expect-error: state type
     const i18n = state.getI18n();
     const config = book.getConfig();
     const summary = book.getSummary();
@@ -104,7 +103,7 @@ function createTemplateEngine(output: Output, currentFile: string): TemplateEngi
         globals: {
             getArticleByPath: memoizeOne(getArticleByPath),
             getPageByPath: memoizeOne(getPageByPath),
-            fileExists: fileExists,
+            fileExists: fileExists
         },
 
         filters: defaultFilters.merge({
@@ -153,12 +152,12 @@ function createTemplateEngine(output: Output, currentFile: string): TemplateEngi
 
             contentURL: function (filePath) {
                 return fileToURL(output, filePath);
-            },
+            }
         }),
 
         extensions: {
-            DoExtension: new DoExtension(),
-        },
+            DoExtension: new DoExtension()
+        }
     });
 }
 

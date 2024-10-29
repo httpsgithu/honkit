@@ -1,4 +1,5 @@
 import escape from "escape-html";
+import * as cheerio from "cheerio";
 
 // Selector to ignore
 const ANNOTATION_IGNORE = ".no-glossary,code,pre,a,script,h1,h2,h3,h4,h5,h6";
@@ -7,24 +8,21 @@ function pregQuote(str) {
     return `${str}`.replace(/([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1");
 }
 
-function replaceText($, el, search, replace, text_only) {
+function replaceText($: cheerio.CheerioAPI, el, search, replace, text_only) {
     return $(el).each(function () {
-        let node = this.firstChild,
-            val,
-            new_val;
-        // Elements to be removed at the end.
-        const remove = [];
-
+        let node = this.firstChild;
+        let val;
+        let new_val;
         // Only continue if firstChild exists.
+        const replaceMap = new Map();
         if (node) {
             // Loop over all childNodes.
             while (node) {
                 // Only process text nodes.
-                if (node.nodeType === 3) {
+                if (node.nodeType === 3 && node.nodeValue) {
                     // The original node value.
                     val = node.nodeValue;
 
-                    // The new value.
                     new_val = val.replace(search, replace);
 
                     // Only replace text if the new value is actually different!
@@ -32,10 +30,13 @@ function replaceText($, el, search, replace, text_only) {
                         if (!text_only && /</.test(new_val)) {
                             // The new value contains HTML, set it in a slower but far more
                             // robust way.
-                            $(node).before(new_val);
-
                             // Don't remove the node yet, or the loop will lose its place.
-                            remove.push(node);
+                            const currentTextNode = $(node);
+                            const newHTML = val.replace(val, new_val);
+                            if (newHTML !== val) {
+                                // should not replace in looping, keep it in map
+                                replaceMap.set(currentTextNode, newHTML);
+                            }
                         } else {
                             // The new value contains no HTML, so it can be set in this
                             // very fast, simple way.
@@ -43,13 +44,14 @@ function replaceText($, el, search, replace, text_only) {
                         }
                     }
                 }
-
                 node = node.nextSibling;
             }
         }
-
-        // Time to remove those elements!
-        if (remove.length) $(remove).remove();
+        // replace nodes after looping
+        for (const [node, newHTML] of replaceMap.entries()) {
+            node.replaceWith(newHTML);
+        }
+        replaceMap.clear(); // clean up
     });
 }
 
@@ -64,8 +66,15 @@ function annotateText(entries, glossaryFilePath, $) {
     entries.forEach((entry) => {
         const entryId = entry.getID();
         const name = entry.getName();
+        const nameLowerCase = `${name}`.toLowerCase();
+        const quotedName = pregQuote(nameLowerCase);
+        const nameCleaned = nameLowerCase.replace(/[^\w\s]/, "");
+        const searchRegex =
+            nameLowerCase === nameCleaned
+                ? new RegExp(`\\b(${quotedName})\\b`, "gi")
+                : new RegExp(`(?:\\s*)(${quotedName})(?:\\s*)`, "gi");
+
         const description = entry.getDescription();
-        const searchRegex = new RegExp(`\\b(${pregQuote(name.toLowerCase())})\\b`, "gi");
 
         $("*").each(function () {
             const $this = $(this);
@@ -73,10 +82,10 @@ function annotateText(entries, glossaryFilePath, $) {
             if ($this.is(ANNOTATION_IGNORE) || $this.parents(ANNOTATION_IGNORE).length > 0) return;
 
             // @ts-expect-error ts-migrate(2554) FIXME: Expected 5 arguments, but got 4.
-            replaceText($, this, searchRegex, (match) => {
+            replaceText($, this, searchRegex, (match, matchedTerm) => {
                 return (
                     `<a href="/${glossaryFilePath}#${entryId}" ` +
-                    `class="glossary-term" title="${escape(description)}">${match}</a>`
+                    `class="glossary-term" title="${escape(description)}">${matchedTerm}</a>`
                 );
             });
         });

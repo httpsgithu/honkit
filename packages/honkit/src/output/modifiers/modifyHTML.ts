@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import Promise from "../../utils/promise";
 
 /**
@@ -11,7 +11,8 @@ import Promise from "../../utils/promise";
  */
 function modifyHTML(page, operations) {
     const html = page.getContent();
-    const $ = cheerio.load(html);
+    // @ts-expect-error
+    const $ = cheerio.load(html, { _useHtmlParser2: true });
 
     return Promise.forEach(operations, (op) => {
         return op($);

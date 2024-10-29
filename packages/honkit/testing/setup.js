@@ -15,7 +15,7 @@ expect.extend({
             : () => `expected directory ${dirPath} to contain a file named ${fileName}`;
         return {
             pass: pass,
-            message: message,
+            message: message
         };
     },
     /**
@@ -24,7 +24,7 @@ expect.extend({
      * @param {String} selector
      */
     toHaveDOMElement(html, selector) {
-        const $ = cheerio.load(html);
+        const $ = cheerio.load(html, { _useHtmlParser2: true });
         const $el = $(selector);
         const pass = $el.length > 0;
         const message = pass
@@ -32,7 +32,7 @@ expect.extend({
             : () => `expected HTML to contain an element at ${selector}`;
         return {
             pass: pass,
-            message: message,
+            message: message
         };
-    },
+    }
 });

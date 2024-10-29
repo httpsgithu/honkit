@@ -19,56 +19,40 @@
   "authors": [
     "azu. <azuciao@gmail.com>"
   ],
-  "workspaces": [
-    "packages/*",
-    "packages/@honkit/*",
-    "examples/*"
-  ],
   "scripts": {
     "lint": "eslint .",
+    "lint-all": "lerna run lint --ignore \"@example/*\"",
     "build": "lerna run build --ignore \"@example/*\"",
     "clean": "lerna run clean --ignore \"@example/*\"",
+    "clean-deps": "rm -rf node_modules && pnpm -r exec rm -rf node_modules",
     "test": "lerna run test --ignore \"@example/*\"",
     "updateSnapshot": "lerna run updateSnapshot --ignore \"@example/*\"",
-    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
-    "versionup": "lerna version --no-push --no-git-tag-version --conventional-commits",
-    "versionup:patch": "lerna version patch --no-push --no-git-tag-version --conventional-commits",
-    "versionup:minor": "lerna version minor --no-push --no-git-tag-version --conventional-commits",
-    "versionup:major": "lerna version major --no-push --no-git-tag-version --conventional-commits",
-    "postversionup": "npm run commit-version",
-    "postversionup:patch": "npm run commit-version",
-    "postversionup:minor": "npm run commit-version",
-    "postversionup:major": "npm run commit-version",
-    "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./lerna.json\").version'`\"",
+    "versionup": "lerna version",
+    "ci:versionup:patch": "lerna version patch --no-push --no-git-tag-version --yes && npm run commit-version",
+    "ci:versionup:minor": "lerna version minor --no-push --no-git-tag-version --yes && npm run commit-version",
+    "ci:versionup:major": "lerna version major --no-push --no-git-tag-version --yes && npm run commit-version",
+    "commit-version": "git add . && git commit -m \"chore(release): v$(node -p 'require(\"./lerna.json\").version')\"",
     "release": "lerna publish from-package",
+    "ci:release": "lerna publish from-package --yes",
     "release-ci": "yarn run build && lerna publish from-package --yes --no-verify-access",
-    "honkit:build": "honkit build",
-    "honkit:serve": "honkit serve"
+    "honkit:build": "npm run build && honkit build",
+    "honkit:serve": "honkit serve",
+    "format": "prettier --write \"**/*.{mjs,js,jsx,ts,tsx,css}\"",
+    "prepare": "git config --local core.hooksPath .githooks"
   },
   "devDependencies": {
-    "@types/cheerio": "^0.22.18",
-    "@types/jest": "^26.0.0",
-    "eslint": "^7.19.0",
-    "husky": "^4.3.8",
-    "lerna": "^4.0.0",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.2.1",
-    "ts-jest": "^26.5.0",
-    "typescript": "^4.1.3"
-  },
-  "prettier": {
-    "singleQuote": false,
-    "printWidth": 120,
-    "tabWidth": 4
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "@honkit/cleaning-tools": "workspace:*",
+    "eslint": "^9.12.0",
+    "honkit": "workspace:*",
+    "lerna": "^8.1.8",
+    "lint-staged": "^13.3.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,css}": [
+    "*.{mjs,js,jsx,ts,tsx,css}": [
       "prettier --write"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca"
 }

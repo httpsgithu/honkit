@@ -22,8 +22,10 @@ function watch(dir, callback) {
 
     const watcher = chokidar.watch(toWatch, {
         cwd: dir,
-        ignored: "_book/**",
-        ignoreInitial: true,
+        // prevent infinity loop
+        // https://github.com/honkit/honkit/issues/269
+        ignored: ["_book/**", "node_modules/**"],
+        ignoreInitial: true
     });
 
     watcher.on("all", (e, filepath) => {

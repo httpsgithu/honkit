@@ -2,7 +2,8 @@ import path from "path";
 import ASSET_FOLDER from "../../constants/pluginAssetsFolder";
 import Promise from "../../utils/promise";
 import fs from "../../utils/fs";
-
+import Output from "../../models/output";
+import Plugin from "../../models/plugin";
 /**
  Copy all assets from plugins.
  Assets are files stored in "_assets"
@@ -60,17 +61,15 @@ function copyAssets(output, plugin) {
     return fs.copyDir(assetFolder, assetOutputFolder, {
         deleteFirst: false,
         overwrite: true,
-        confirm: false,
+        confirm: false
     });
 }
 
 /**
  Copy resources from a plugin
-
- @param {Plugin}
  @return {Promise}
  */
-function copyResources(output, plugin) {
+function copyResources(output: Output, plugin: Plugin) {
     const logger = output.getLogger();
 
     const options = output.getOptions();
@@ -102,7 +101,7 @@ function copyResources(output, plugin) {
     return fs.copyDir(assetsFolder, assetOutputFolder, {
         deleteFirst: false,
         overwrite: true,
-        confirm: false,
+        confirm: false
     });
 }
 

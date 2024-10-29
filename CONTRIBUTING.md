@@ -7,7 +7,7 @@ Please install following development prerequisites. You also need a [GitHub](htt
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en/)
-- [Yarn](https://classic.yarnpkg.com/en/)
+- [pnpm](https://pnpm.io/)
 
 
 ### Cloning Copy of HonKit
@@ -15,7 +15,7 @@ Please install following development prerequisites. You also need a [GitHub](htt
 Forking a repository allows you to work with HonKit codebase without special permission to the HonKit repository itself.
 
 1. Navigate to [HonKit](https://github.com/honkit/honkit/) repository
-2. In the top–right corner of the page, click **Fork** button
+2. In the top-right corner of the page, click **Fork** button
 3. Create a clone of the fork locally in your terminal:
 
     ```sh
@@ -37,13 +37,13 @@ After getting your clone, you can start playing with HonKit.
 2. Install dependencies and build packages:
 
     ```sh
-    $ yarn install
+    $ pnpm install
     ```
 
 3. Run build:
 
     ```sh
-    $ yarn run build
+    $ pnpm run build
     ```
 
 Under the hood, HonKit uses [Lerna](https://lerna.js.org/) to manage multiple packages:
@@ -54,7 +54,7 @@ Under the hood, HonKit uses [Lerna](https://lerna.js.org/) to manage multiple pa
 
 If you are new to Lerna, it seems to add another layer of complexity, but it's simpler than you think; you can edit codes, run tests, commit changes, etc. as usual in most cases.
 
-Note that `yarn install` also builds a codebase, you can manually build by running `yarn run build`.
+Note that `pnpm install` also builds a codebase, you can manually build by running `pnpm run build`.
 
 ### Creating a Branch for Your Work
 
@@ -78,14 +78,14 @@ This repository uses [Prettier](https://prettier.io/) for code formatter. We use
 - Run Prettier to reformat code:
 
     ```sh
-    $ yarn prettier
+    $ pnpm format
     ```
 
 ##### Commit Message Format
 
 We use [Angular Convention](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular) for commit message.
 
-In order to make repository history clean, please use the following guideline as possible as you can. It also enables us creating comprehensive changelog semi–automatically.
+In order to make repository history clean, please use the following guideline as possible as you can. It also enables us creating comprehensive changelog semi-automatically.
 
 ```
                       component        commit title
@@ -108,7 +108,7 @@ issues          Ref. #8454
     - `style`: change formatting
     - `perf`: performance related change
     - `test`: update on tests
-    - `chore`: house–keeping
+    - `chore`: housekeeping
     - `refactor`: refactoring related change
 - component: package or file name
 - commit title:
@@ -150,14 +150,14 @@ All tests should be run at the top directory of your fork.
 Run tests for all packages:
 
 ```sh
-$ yarn test
+$ pnpm test
 ```
 
 While developing, it would be good to run package level unit test since it will run faster:
 
 ```sh
 $ cd packages/PACKAGE
-$ yarn test
+$ pnpm test
 ```
 
 

@@ -1,5 +1,4 @@
 import path from "path";
-import tmp from "tmp";
 import Promise from "../utils/promise";
 import fs from "../utils/fs";
 import Parse from "../parse";
@@ -7,6 +6,7 @@ import Output from "../output";
 import options from "./options";
 import getBook from "./getBook";
 import { clearCache } from "../output/page-cache";
+import { createTmpDirWithRealPath } from "../fs/tmpdir";
 
 export default function (format) {
     return {
@@ -20,7 +20,7 @@ export default function (format) {
             const outputFile = args[1] || `book${extension}`;
 
             // Create temporary directory
-            const outputFolder = tmp.dirSync().name;
+            const outputFolder = createTmpDirWithRealPath();
 
             const book = getBook(args, kwargs);
             const logger = book.getLogger();
@@ -33,7 +33,7 @@ export default function (format) {
                     .then((resultBook) => {
                         return Output.generate(Generator, resultBook, {
                             root: outputFolder,
-                            format: format,
+                            format: format
                         });
                     })
 
@@ -66,6 +66,6 @@ export default function (format) {
                         return logger.debug.promise(fs.rmDir(outputFolder));
                     })
             );
-        },
+        }
     };
 }

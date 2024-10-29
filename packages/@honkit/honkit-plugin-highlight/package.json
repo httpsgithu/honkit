@@ -1,7 +1,7 @@
 {
   "name": "@honkit/honkit-plugin-highlight",
   "description": "Default code highlighter for HonKit",
-  "version": "3.6.19",
+  "version": "6.0.2",
   "homepage": "https://github.com/honkit/honkit",
   "repository": {
     "type": "git",
@@ -17,10 +17,10 @@
     "css"
   ],
   "dependencies": {
-    "highlight.js": "^10.7.1"
+    "highlight.js": "^11.10.0"
   },
   "devDependencies": {
-    "less": "^3.12.2"
+    "less": "^3.13.1"
   },
   "scripts": {
     "build": "npm run build:less --scripts-prepend-node-path && npm run build:css --scripts-prepend-node-path",

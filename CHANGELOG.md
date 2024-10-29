@@ -1,7 +1,140 @@
-# Change Log
+# Change Log (Deprecated)
 
-All notable changes to this project will be documented in this file.
+See [Releases on GitHub](https://github.com/honkit/honkit/releases) for the newest releases with notable changes provided.
+
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [4.0.6](https://github.com/honkit/honkit/compare/v4.0.5...v4.0.6) (2023-03-26)
+
+**Note:** Version bump only for package honkit-root
+
+
+
+
+
+## [4.0.5](https://github.com/honkit/honkit/compare/v4.0.4...v4.0.5) (2023-03-26)
+
+**Note:** Version bump only for package honkit-root
+
+
+
+
+
+## [4.0.4](https://github.com/honkit/honkit/compare/v4.0.3...v4.0.4) (2022-10-22)
+
+**Note:** Version bump only for package honkit-root
+
+
+
+
+
+## [4.0.3](https://github.com/honkit/honkit/compare/v4.0.2...v4.0.3) (2022-10-22)
+
+
+### Bug Fixes
+
+* **theme-default:** add --flat to fonts ([#305](https://github.com/honkit/honkit/issues/305)) ([c543b45](https://github.com/honkit/honkit/commit/c543b459618673ca525d4ea93e45975391961d12))
+
+
+
+
+
+## [4.0.2](https://github.com/honkit/honkit/compare/v4.0.1...v4.0.2) (2022-10-19)
+
+
+### Bug Fixes
+
+* **honkit:** fix missing --flat for cpy 9+ ([#301](https://github.com/honkit/honkit/issues/301)) ([90edf03](https://github.com/honkit/honkit/commit/90edf03ec1bca9e0020d691653b1449f51603744))
+
+
+
+
+
+## [4.0.1](https://github.com/honkit/honkit/compare/v4.0.0...v4.0.1) (2022-10-18)
+
+
+### Bug Fixes
+
+* **honkit:** fix annotateText ([6a1092b](https://github.com/honkit/honkit/commit/6a1092bbdab3d2ab08bfa47c7ed9320e53c7e44e))
+* plugin error msg ([#297](https://github.com/honkit/honkit/issues/297)) ([a26fb06](https://github.com/honkit/honkit/commit/a26fb069894968256678f5ffae49bff933df6ef5))
+
+
+
+
+
+# [4.0.0](https://github.com/honkit/honkit/compare/v3.7.5...v4.0.0) (2022-08-28)
+
+
+### Bug Fixes
+
+* **honkit:** Upgrade juice to 8.x ([#283](https://github.com/honkit/honkit/issues/283)) ([749bff2](https://github.com/honkit/honkit/commit/749bff26a7695cac0c8eca795a30537267166b8d))
+
+
+* Drop to support Node.js 12 (#291) ([fc99470](https://github.com/honkit/honkit/commit/fc994708138068e88dedc46e8ad0e02692940982)), closes [#291](https://github.com/honkit/honkit/issues/291) [#290](https://github.com/honkit/honkit/issues/290) [#288](https://github.com/honkit/honkit/issues/288)
+
+
+### Features
+
+* **publish:** multiple docker images per node.js version ([#289](https://github.com/honkit/honkit/issues/289)) ([6995c16](https://github.com/honkit/honkit/commit/6995c1630bd31f9d0bbd75d31d6c60897cd9efc1))
+
+
+### BREAKING CHANGES
+
+* drop to support Node.js 12
+
+- Node.js 12 is EOL https://nodejs.org/en/about/releases/ 
+- Use Node.js 14, 16, 18 for CI
+
+Probably, Current HonKit still work on Node.js 12, but it will be broken in minor updates.
+
+
+
+
+
+## [3.7.5](https://github.com/honkit/honkit/compare/v3.7.4...v3.7.5) (2022-07-14)
+
+
+### Bug Fixes
+
+* **honkit:** hokit server should not watch node_modules/** changes ([#277](https://github.com/honkit/honkit/issues/277)) ([982d649](https://github.com/honkit/honkit/commit/982d649e57bf2594a4272013d31743e6fc37de8a))
+
+
+
+
+
+## [3.7.4](https://github.com/honkit/honkit/compare/v3.7.3...v3.7.4) (2022-06-21)
+
+
+### Bug Fixes
+
+* **honkit:** make `honkit parse` work for multi lang book ([#271](https://github.com/honkit/honkit/issues/271)) ([83f7597](https://github.com/honkit/honkit/commit/83f7597688f549d7556f76d9883bc9b76dd5181a))
+
+
+
+
+
+## [3.7.3](https://github.com/honkit/honkit/compare/v3.7.2...v3.7.3) (2022-05-28)
+
+
+### Bug Fixes
+
+* **theme-default:** prevent to replace html/head/body as strings ([#266](https://github.com/honkit/honkit/issues/266)) ([3d9392b](https://github.com/honkit/honkit/commit/3d9392bcd67b403c895f524d5fb3d5612c7fd288))
+
+
+
+
+
+## [3.7.2](https://github.com/honkit/honkit/compare/v3.7.1...v3.7.2) (2022-05-28)
+
+
+### Bug Fixes
+
+* **honkit:** getNpmID return pkg's name ([#263](https://github.com/honkit/honkit/issues/263)) ([84f1a0a](https://github.com/honkit/honkit/commit/84f1a0a67475e9f740d74334ac057c151802c9b6))
+* **markdown:** fix em RegExp match ([#251](https://github.com/honkit/honkit/issues/251)) ([d329d8e](https://github.com/honkit/honkit/commit/d329d8ef1938f9e4b1e80860a894ce76b39a02ab))
+
+
+
+
 
 ## [3.7.1](https://github.com/honkit/honkit/compare/v3.7.0...v3.7.1) (2022-01-17)
 

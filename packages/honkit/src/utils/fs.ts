@@ -2,11 +2,12 @@ import fs from "fs";
 import mkdirp from "mkdirp";
 import destroy from "destroy";
 import tmp from "tmp";
-import request from "request";
 import path from "path";
 import cp from "cp";
 import cpr from "cpr";
 import Promise from "./promise";
+import http from "http";
+import https from "https";
 
 // Write a stream to a file
 function writeStream(filename, st) {
@@ -57,14 +58,52 @@ function genTmpFile(opts) {
     return Promise.nfcall(tmp.file, opts).get(0);
 }
 
-// Generate temporary dir
+/**
+ * Generate temporary dir
+ * @deprecated use tmpdir.ts
+ * @param opts
+ */
 function genTmpDir(opts) {
     return Promise.nfcall(tmp.dir, opts).get(0);
 }
 
+// https://stackoverflow.com/questions/11944932/how-to-download-a-file-with-node-js-without-using-third-party-libraries
+const downloadStream = (url: string, dest: string, cb: (error: Error | null) => void) => {
+    const file = fs.createWriteStream(dest);
+    const protocol = url.startsWith("https") ? https : http;
+    const request = protocol.get(url, (response) => {
+        // check if response is success
+        if (response.statusCode < 200 && response.statusCode > 300) {
+            return cb(new Error("Response status was " + response.statusCode));
+        }
+        response.pipe(file);
+    });
+    // close() is async, call cb after close completes
+    file.on("finish", () => file.close(() => cb(null)));
+    // check for request error too
+    request.on("error", (err) => {
+        fs.unlink(dest, () => cb(err)); // delete the (partial) file and then return the error
+    });
+    file.on("error", (err) => {
+        // Handle errors
+        fs.unlink(dest, () => cb(err)); // delete the (partial) file and then return the error
+    });
+};
+
 // Download an image
-function download(uri, dest) {
-    return writeStream(dest, request(uri));
+async function download(uri: string, destFilePath: string) {
+    // create dest dir if not exists
+    const destDir = path.dirname(destFilePath);
+    await fs.promises.mkdir(destDir, { recursive: true });
+    const d = Promise.defer();
+    downloadStream(uri, destFilePath, (err) => {
+        if (err) {
+            d.reject(err);
+        } else {
+            d.resolve();
+        }
+    });
+    return d.promise;
 }
 
 // Find a filename available in a folder
@@ -93,8 +132,8 @@ function ensureFile(filename) {
 
 // Remove a folder
 function rmDir(base) {
-    return Promise.nfcall(fs.rmdir, base, {
-        recursive: true,
+    return Promise.nfcall(fs.rm, base, {
+        recursive: true
     });
 }
 
@@ -176,10 +215,13 @@ export default {
 
     copyDir: Promise.nfbind(cpr),
     tmpFile: genTmpFile,
+    /**
+     * @deprecated use tmpdir.ts
+     */
     tmpDir: genTmpDir,
     download: download,
     uniqueFilename: uniqueFilename,
     ensureFile: ensureFile,
     ensureFolder: ensureFolder,
-    rmDir: rmDir,
+    rmDir: rmDir
 };

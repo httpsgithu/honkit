@@ -1,6 +1,6 @@
 {
   "name": "@honkit/honkit-plugin-theme-default",
-  "version": "3.6.20",
+  "version": "6.0.2",
   "description": "Default theme for HonKit",
   "bugs": {
     "url": "https://github.com/honkit/honkit/issues"
@@ -43,15 +43,17 @@
     "build:js:theme": "browserify src/js/theme/index.js | uglifyjs -mc > _assets/website/theme.js",
     "clean": "rimraf _assets && mkdirp _assets/ebook/ _assets/website/ _assets/website/fonts _assets/website/images",
     "cp": "npm-run-all -p cp:*",
-    "cp:favicon": "cpy logo/favicon.ico _assets/website/images/",
-    "cp:font-awesome": "cpy font-awesome/fonts/ _assets/website/fonts/fontawesome/",
-    "cp:logo": "cpy logo/apple-touch-icon.png _assets/website/images/ --rename=apple-touch-icon-precomposed-152.png",
-    "prepublish": "npm run build"
+    "cp:favicon": "cpy --flat logo/favicon.ico _assets/website/images/",
+    "cp:font-awesome": "cpy --flat font-awesome/fonts/ _assets/website/fonts/fontawesome/",
+    "cp:logo": "cpy --flat logo/apple-touch-icon.png _assets/website/images/ --rename=apple-touch-icon-precomposed-152.png",
+    "prepublish": "npm run build",
+    "lint": "eslint ."
   },
   "devDependencies": {
-    "browserify": "13.1.0",
-    "cpy-cli": "^3.1.1",
-    "eslint": "7.19.0",
+    "@honkit/cleaning-tools": "workspace:*",
+    "browserify": "17.0.0",
+    "cpy-cli": "^4.2.0",
+    "eslint": "^9.12.0",
     "font-awesome": "4.6.3",
     "gitbook-markdown-css": "1.0.1",
     "jquery": "3.5.1",
@@ -61,7 +63,7 @@
     "mousetrap": "1.6.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
-    "uglify-js": "2.7.3"
+    "uglify-js": "3.17.0"
   },
   "engines": {
     "gitbook": ">=3.0.0"

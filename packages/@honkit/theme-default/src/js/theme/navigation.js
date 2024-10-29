@@ -129,7 +129,7 @@ function setChapterActive($chapter, hash) {
     }
 
     // If hash is provided, set as active chapter
-    if (!!hash) {
+    if (hash) {
         // Multiple chapters for this file
         if ($chapters.length > 1) {
             $chapter = $chapters
@@ -174,7 +174,7 @@ function getChapterHash($chapter) {
         hash = $link.attr("href").split("#")[1];
 
     if (hash) hash = "#" + hash;
-    return !!hash ? hash : "";
+    return hash || "";
 }
 
 // Handle user scrolling
@@ -264,7 +264,12 @@ function handleNavigation(relativeUrl, push) {
                 var responseURL = xhr.getResponseHeader("X-Current-Location") || uri;
 
                 // Replace html content
-                html = html.replace(/<(\/?)(html|head|body)([^>]*)>/gi, function (a, b, c, d) {
+                // Replace first <html><head><body> at once https://github.com/honkit/honkit/issues/265
+                html = html.replace(/<(\/?)(html)([^>]*)>/i, function (a, b, c, d) {
+                    return "<" + b + "div" + (b ? "" : ' data-element="' + c + '"') + d + ">";
+                }).replace(/<(\/?)(head)([^>]*)>/i, function (a, b, c, d) {
+                    return "<" + b + "div" + (b ? "" : ' data-element="' + c + '"') + d + ">";
+                }).replace(/<(\/?)(body)([^>]*)>/i, function (a, b, c, d) {
                     return "<" + b + "div" + (b ? "" : ' data-element="' + c + '"') + d + ">";
                 });
 
@@ -338,7 +343,7 @@ function handleNavigation(relativeUrl, push) {
 
     return loading.show(
         promise.fail(function (e) {
-            console.log(e); // eslint-disable-line no-console
+            console.log(e);
             // location.href = relativeUrl;
         })
     );

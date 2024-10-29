@@ -1,6 +1,6 @@
 {
   "name": "@honkit/asciidoc",
-  "version": "3.6.17",
+  "version": "6.0.2",
   "description": "Parse AsciiDoc content for gitbook",
   "homepage": "https://github.com/honkit/honkit",
   "bugs": {
@@ -32,16 +32,18 @@
   ],
   "scripts": {
     "build": "tsc -p .",
-    "test": "yarn build && jest src",
+    "test": "jest src",
     "prepublish": "npm run --if-present build"
   },
   "dependencies": {
-    "@honkit/html": "^3.6.17",
-    "asciidoctor": "^2.2.0",
-    "lodash": "^4.13.1"
+    "@honkit/html": "workspace:*",
+    "asciidoctor": "^2.2.8",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "@types/jest": "^29.5.13",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
   },
   "publishConfig": {
     "access": "public"

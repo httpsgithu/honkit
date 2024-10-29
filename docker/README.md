@@ -28,12 +28,12 @@ Serve on port 4000
 
 ### Custom Font
 
-You can create new image includes custom font based on honkig image.
+You can create new image includes custom font based on honkit image.
 
 ```
 FROM honkit/honkit:latest
 LABEL maintainer="your@example.com"
 
 # Install fonts
-COPY fonts/custom-fone /usr/share/fonts
+COPY fonts/custom-font /usr/share/fonts
 ```

@@ -14,7 +14,7 @@ HonKit documentation is built by HonKit!
 
 ### Installation
 
-- Requirement: [Node.js](https://nodejs.org) [LTS](https://nodejs.org/about/releases/) version
+- Requirement: [Node.js](https://nodejs.org) [LTS](https://nodejs.org/en/about/previous-releases) version
 
 The best way to install HonKit is via **NPM** or **Yarn**.
 
@@ -55,6 +55,20 @@ $ npx honkit build
 You can start to write your book!
 
 For more details, see [HonKit's documentation](https://honkit.netlify.app/).
+
+## Docker support
+
+Honkit provide docker image at [honkit/honkit](https://hub.docker.com/r/honkit/honkit).
+
+This docker image includes built-in dependencies for PDF/epub.
+
+```
+docker pull honkit/honkit
+docker run -v `pwd`:`pwd` -w `pwd` --rm -it honkit/honkit honkit build
+docker run -v `pwd`:`pwd` -w `pwd` --rm -it honkit/honkit honkit pdf
+```
+
+For more details, see [docker/](./docker/).
 
 ## Usage examples
 
@@ -101,7 +115,7 @@ HonKit aims to smooth the migration from GitBook (Legacy) to HonKit.
 - Remove `install` command
     - Instead of it, just use `npm install` or `yarn install`
 - Remove `global-npm` dependency
-    - You can use HonKit with another npm package manager like `yarn`
+    - You can use HonKit with another npm package manager like `npm` or `yarn`
 - Update dependencies
     - Upgrade to nunjucks@2, highlight.js etc...
     - It will reduce bugs
@@ -109,7 +123,7 @@ HonKit aims to smooth the migration from GitBook (Legacy) to HonKit.
     - Rewritten by TypeScript
 - Monorepo codebase
     - Easy to maintain
-- Docker support
+- [Docker support](./docker)
 
 ### Migration from GitBook
 

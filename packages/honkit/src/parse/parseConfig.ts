@@ -26,7 +26,7 @@ function parseConfig(book) {
                 return fs.statFile(filename).then((file) => {
                     return {
                         file: file,
-                        values: cfg,
+                        values: cfg
                     };
                 });
             })
@@ -39,7 +39,7 @@ function parseConfig(book) {
         values = validateConfig(values);
 
         // Set the file
-        if (result.file) {
+        if (result && result.file) {
             config = config.setFile(result.file);
         }
 
